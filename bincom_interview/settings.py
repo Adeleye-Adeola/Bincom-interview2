@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'election.apps.ElectionConfig'
+    'election.apps.ElectionConfig',
     'whitenoise.runserver_nostatic',
 ]
 
