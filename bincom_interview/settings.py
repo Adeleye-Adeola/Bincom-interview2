@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-j42k07pj92whu1^tq$yi&2i!oxu!)naq%(cuoh@&6+v-+l87*0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bincom-interview2.onrender.com']
 
 
 # Application definition
