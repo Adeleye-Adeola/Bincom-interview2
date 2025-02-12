@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polling Unit Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form, .button-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button, .btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        button:hover, .btn:hover {
+            background-color: #2980b9;
+        }
+        .button-container {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e6e6e6;
+        }
+        p {
+            text-align: center;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polling Unit Results</h1>
+    <form action="{% url 'polling_unit' polling_unit_id=0 %}" method="get" onsubmit="updateAction(event)">
+        <label for="polling_id">Enter Polling Unit ID:</label>
+        <input type="number" id="polling_id" name="polling_id" required>
+        <button type="submit">View Results</button>
+    </form>
+    
+    <div class="button-container">
+        <a href="{%url 'lga-result'%}" class="btn">LGA Results</a>
+        <a href="{%url 'add_polling_unit_results'%}" class="btn">Add Result</a>
+    </div>
+    
+    {% if result %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Party</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in result %}
+                <tr>
+                    <td>{{ res.party_abbreviation }}</td>
+                    <td>{{ res.party_score }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: red;">No results found for this polling unit.</p>
+    {% endif %}
+    
+    <script>
+        function updateAction(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            let pollingId = document.getElementById("polling_id").value;
+            if (!pollingId) {
+                alert("Please enter a Polling Unit ID");
+                return;
+            }
+
+            // Update form action dynamically
+            let form = event.target;
+            form.action = `/polling-unit/${pollingId}/`;
+            form.submit(); // Submit the form
+        }
+    </script>
+</body>
+</html>
+
